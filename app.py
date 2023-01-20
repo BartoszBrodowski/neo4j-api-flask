@@ -12,14 +12,15 @@ driver = GraphDatabase.driver('bolt://localhost:7687', auth=('neo4j', 'test1234'
 def add_item():
     # Get the item name from the request
     data = request.get_json()
-    item_name = data['item_name']
-    item_quantity = data['item_quantity']
+    first_name = data['first_name']
+    last_name = data['last_name']
+    position = data['position']
     # Create a session to interact with the database
     with driver.session() as session:
         # Write the query to add the item to the database
-        query = 'CREATE (i:Item {name: $item_name, quantity: $item_quantity})'
+        query = 'CREATE (e:Employee {first_name: $first_name, last_name: $last_name, position: $position})'
         # Execute the query
-        session.run(query, item_name=item_name, item_quantity=item_quantity)
+        session.run(query, first_name=first_name, last_name=last_name, position=position)
     # Return a message to the user
     return jsonify({'message': 'Item added to database'})
 
